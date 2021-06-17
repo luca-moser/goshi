@@ -37,9 +37,6 @@ func main() {
 	log.Printf("running program %d", *program)
 	switch *program {
 	case 0:
-		if *faucetReqPara < 1 {
-			*faucetReqPara = 1
-		}
 		for i := 0; i < *faucetReqPara; i++ {
 			go spamFaucetRequests()
 		}
