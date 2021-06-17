@@ -34,6 +34,7 @@ func must(err error) {
 
 func main() {
 	flag.Parse()
+	log.Printf("running program %d", *program)
 	switch *program {
 	case 0:
 		if *faucetReqPara < 1 {
