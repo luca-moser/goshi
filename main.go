@@ -5,6 +5,8 @@ import (
 	"flag"
 	"fmt"
 	"log"
+	"os"
+	"os/signal"
 	"strconv"
 	"sync"
 	"time"
@@ -35,6 +37,10 @@ func must(err error) {
 func main() {
 	flag.Parse()
 	log.Printf("running program %d", *program)
+
+	c := make(chan os.Signal, 1)
+	signal.Notify(c, os.Interrupt)
+
 	switch *program {
 	case 0:
 		for i := 0; i < *faucetReqPara; i++ {
@@ -45,6 +51,7 @@ func main() {
 	case 2:
 		spamConflicts()
 	}
+	<-c
 }
 
 func spamConflicts() {
