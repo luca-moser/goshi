@@ -23,7 +23,8 @@ import (
 var (
 	program         = flag.Int("program", 0, "the program to run")
 	faucetPoWTarget = flag.Int("faucetPoWTarget", 22, "the faucet pow target")
-	faucetReqPara = flag.Int("faucetReqPara", 4, "the count of concurrent faucet requester")
+	faucetReqPara   = flag.Int("faucetReqPara", 4, "the count of concurrent faucet requester")
+	faucetReqSleep  = flag.Duration("faucetReqSleep", 0, "the duration to wait between faucet requests")
 	pollingInterval = flag.Duration("pollingInterval", time.Second, "the polling interval")
 	nodeURI         = flag.String("node", "https://api.goshimmer.lucamoser.io", "the node to use")
 )
@@ -130,6 +131,7 @@ func spamFaucetRequests() {
 	for i := 0; ; i++ {
 		addrBase58 := wall.Seed().Address(uint64(i)).Base58()
 		requestFunds(addrBase58, api, infoRes.IdentityID)
+		time.Sleep(*faucetReqSleep)
 	}
 }
 
